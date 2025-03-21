@@ -1,0 +1,42 @@
+Assignment Results:
+1. Average Steps per Person:
+fitbit_id
+323     6.154593
+324    15.993182
+325    11.948286
+327     5.559619
+328    16.647727
+329     9.429524
+349     3.895048
+
+2. Model Performance:
+Accuracy: 0.96
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.96      0.99      0.97     36128
+           1       0.95      0.82      0.88      8332
+
+    accuracy                           0.96     44460
+   macro avg       0.96      0.91      0.93     44460
+weighted avg       0.96      0.96      0.96     44460
+
+Confusion Matrix:
+[[35777   351]
+ [ 1491  6841]]
+
+3. Feature Importance:
+distance         0.328656
+calories         0.281756
+mets             0.261048
+level            0.111039
+season_Winter    0.009934
+season_Spring    0.003973
+day_of_week_4    0.001500
+day_of_week_0    0.000559
+day_of_week_1    0.000510
+day_of_week_3    0.000390
+season_Summer    0.000335
+day_of_week_2    0.000300
+is_holiday       0.000000
+season_Autumn    0.000000
