@@ -1,42 +1,42 @@
 Assignment Results:
 1. Average Steps per Person:
-fitbit_id
-323     6.154593
-324    15.993182
-325    11.948286
-327     5.559619
-328    16.647727
-329     9.429524
-349     3.895048
+treatment_id
+1119    10.944042
+1120     5.377593
+1121     4.003055
+1122    13.392677
+1123     5.074360
+1124     2.904963
+1125     7.591098
 
 2. Model Performance:
-Accuracy: 0.96
+Accuracy: 0.99
 Classification Report:
               precision    recall  f1-score   support
 
-           0       0.96      0.99      0.97     36128
-           1       0.95      0.82      0.88      8332
+           0       0.99      1.00      0.99    823718
+           1       0.97      0.93      0.95    118042
 
-    accuracy                           0.96     44460
-   macro avg       0.96      0.91      0.93     44460
-weighted avg       0.96      0.96      0.96     44460
+    accuracy                           0.99    941760
+   macro avg       0.98      0.96      0.97    941760
+weighted avg       0.99      0.99      0.99    941760
 
 Confusion Matrix:
-[[35777   351]
- [ 1491  6841]]
+[[820581   3137]
+ [  8011 110031]]
 
 3. Feature Importance:
-distance         0.328656
-calories         0.281756
-mets             0.261048
-level            0.111039
-season_Winter    0.009934
-season_Spring    0.003973
-day_of_week_4    0.001500
-day_of_week_0    0.000559
-day_of_week_1    0.000510
-day_of_week_3    0.000390
-season_Summer    0.000335
-day_of_week_2    0.000300
+distance         0.315774
+mets             0.298673
+calories         0.252955
+level            0.131923
+day_of_week_0    0.000181
+season_Winter    0.000142
+day_of_week_3    0.000083
+season_Spring    0.000080
+day_of_week_2    0.000074
+day_of_week_4    0.000069
+day_of_week_1    0.000046
 is_holiday       0.000000
+season_Summer    0.000000
 season_Autumn    0.000000
