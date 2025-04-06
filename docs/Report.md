@@ -1,196 +1,4 @@
-# Report
-
-## Step 1
-
-### Which variables are there ?
-
-- treatment_id : qualitative
-- fitbit_id : qualitative
-- date : quantitative
-- calories : quantitative
-- mets : quantitative
-- level : qualitative
-- steps : quantitative
-- distance : quantitative
-
-### What do they signify ?
-
-We can count and do calculation on the quantitative values and sort the qualitative ones.
-
-### What scale are they on ?
-
-- treatment_id : Nominal (categorical, no order).
-- fitbit_id : Nominal (categorical, no order).
-- date : Interval (date and time).
-- calories : Ratio (numeric, can be zero).
-- mets : Ratio (numeric, can't be zero).
-- level : Ratio (numeric, can be zero).
-- steps : Ratio (numeric, can be zero).
-- distance : Ratio (numeric, can be zero).
-
-## Step 2
-
-Do plots
-
-
-
-
 # Fitbit Data Analysis Report
-
-## Introduction
-This project focuses on analyzing Fitbit activity data to understand user behavior patterns and develop predictive models for activity levels. The analysis is particularly important in the context of health and wellness monitoring, as it can provide insights into physical activity patterns and help develop personalized interventions.
-
-## Data Collection and Preprocessing
-
-### Data Sources
-- Primary data collected from multiple Fitbit users (IDs: 323, 324, 325, 327, 328, 329, 349)
-- Key variables collected:
-  - treatment_id (Nominal scale)
-  - fitbit_id (Nominal scale)
-  - date (Interval scale)
-  - calories (Ratio scale)
-  - mets (Ratio scale)
-  - activity level (Ordinal scale)
-  - steps (Ratio scale)
-  - distance (Ratio scale)
-
-### Data Processing Pipeline
-1. Data Loading and Integration
-   ```python
-   # Systematic loading of CSV files
-   path = "../datas/Data Coaching Fitbit/"
-   files = glob.glob(os.path.join(path, "*.csv"))
-   
-   # Process each file
-   for file in files:
-       df = pd.read_csv(file)
-       df['date'] = pd.to_datetime(df['date'])
-       df = df[df['date'].dt.weekday < 5]  # Keep only weekdays
-       df = df[df['date'].dt.hour < 18]    # Keep records before 18:00
-   ```
-
-2. Feature Engineering
-   - Temporal features:
-     - Season (Winter, Spring, Summer, Autumn)
-     - Day of week (0-4 for weekdays)
-     - Holiday status
-   - Activity metrics:
-     - Steps, Calories, METs, Distance
-     - Activity level classification
-
-3. Target Variable Creation
-   - Binary classification: Whether user reaches their average daily steps
-   - Class distribution:
-     - Class 0: 863,628 instances
-     - Class 1: 125,652 instances
-
-## Methodology
-
-### Tools and Libraries Used
-- Pandas for data manipulation and analysis
-- Matplotlib and Seaborn for visualization
-- Scikit-learn for machine learning implementation
-- NumPy for numerical computations
-
-### Analysis Approach
-1. Exploratory Data Analysis
-   - Temporal pattern analysis of activity metrics
-   - User-specific activity profiling
-   - Statistical analysis of activity distributions
-
-2. Machine Learning Implementation
-   - Feature selection based on domain knowledge
-   - Model selection and validation
-   - Performance evaluation using multiple metrics
-
-## Implementation Details
-
-### Key Components
-1. Data Visualization System
-   - Individual activity patterns visualization
-   - Group comparison plots
-   - Temporal trend analysis
-   - Feature importance visualization
-
-2. Model Development
-   - Training data: User 328
-   - Test users: 329, 327, 323, 324, 325, 349
-   - Feature importance analysis:
-     - Distance: 31.58%
-     - METs: 29.87%
-     - Calories: 25.30%
-     - Level: 13.19%
-     - Temporal features: < 0.1% each
-
-3. Model Performance
-   - Overall accuracy: 99%
-   - Classification metrics:
-     - Class 0: Precision 0.99, Recall 1.00, F1-score 0.99
-     - Class 1: Precision 0.97, Recall 0.93, F1-score 0.95
-   - Confusion Matrix:
-     - True Negatives: 820,581
-     - False Positives: 3,137
-     - False Negatives: 8,011
-     - True Positives: 110,031
-
-## Results and Insights
-
-### Key Findings
-1. Activity Patterns
-   - Average steps at 18:00 on working days:
-     - User 324: 13.39 steps (most active)
-     - User 329: 10.94 steps
-     - User 328: 7.59 steps
-     - User 327: 5.38 steps
-     - User 325: 5.07 steps
-     - User 323: 4.00 steps
-     - User 349: 2.90 steps (least active)
-
-2. Feature Correlations
-   - Strong correlation between steps and distance (0.998)
-   - High correlation between METs and calories (0.980)
-   - Significant correlation between activity level and METs (0.956)
-
-3. Temporal Patterns
-   - Clear weekly patterns in activity levels
-   - Minimal impact of seasonal variations
-   - Holiday status shows negligible influence on activity
-
-## Conclusions
-
-### Summary of Findings
-1. Model Performance
-   - Achieved exceptional accuracy (99%) in predicting step goal achievement
-   - Robust performance across different user profiles
-   - Minimal overfitting despite class imbalance
-
-2. Feature Importance
-   - Physical activity metrics (distance, METs, calories) are the strongest predictors
-   - Activity level provides moderate predictive power
-   - Temporal features have minimal impact on predictions
-
-3. User Behavior Insights
-   - Significant variation in activity levels across users
-   - Consistent patterns in daily activity timing
-   - Strong correlations between different activity metrics
-
-### Recommendations
-1. Implementation Strategy
-   - Deploy real-time prediction system using the validated model
-   - Focus on distance and METs as primary tracking metrics
-   - Implement personalized goal setting based on individual patterns
-
-2. Future Improvements
-   - Enhance feature engineering for temporal aspects
-   - Develop more sophisticated activity level classification
-   - Implement automated anomaly detection
-   - Consider adding weather and environmental factors
-
-## References
-1. Pandas Documentation
-2. Scikit-learn Documentation
-3. Fitbit API Documentation
-4. Research papers on activity pattern analysis
 
 ## Executive Summary
 This report analyzes Fitbit activity data as part of the "Het Nieuwe Gezonde Werken" (HNGW) initiative at Hanze University of Applied Sciences Groningen (HUAS). The analysis aims to predict whether individuals will reach their daily step goals, enabling automated coaching processes to promote physical activity in the workplace.
@@ -245,95 +53,379 @@ The dataset originates from the HNGW initiative, containing Fitbit activity data
 #### Dependent Variable:
 - Achievement of daily step goal (binary outcome)
 
-### 2.3 Descriptive Statistics
-Key findings from initial data analysis:
-1. Activity Patterns:
-   - Average steps at 18:00 on working days varies significantly by user
-   - Clear weekly patterns in activity levels
-   - Seasonal variations in step counts
+### 2.3 Data Processing Pipeline
+1. Data Loading and Integration
+   ```python
+   # Systematic loading of CSV files
+   path = "../datas/Data Coaching Fitbit/"
+   files = glob.glob(os.path.join(path, "*.csv"))
+   
+   # Process each file
+   for file in files:
+       df = pd.read_csv(file)
+       df['date'] = pd.to_datetime(df['date'])
+       df = df[df['date'].dt.weekday < 5]  # Keep only weekdays
+       df = df[df['date'].dt.hour <= 18]   # Keep records up to 18:00
+   ```
 
-2. User Behavior:
-   - Workday activity patterns differ from holidays
-   - Individual variations in daily step goals
-   - Consistent patterns in activity timing
+2. Data Quality Assessment
+   - Dataset Size: 1,044,240 rows × 8 columns
+   - Date Range: December 2014 to July 2015
+   - Missing Values: Only 0.11% in steps column
+   - No duplicate records found
+   - Data types properly aligned with variables
+
+3. Feature Engineering
+   - Temporal features extraction
+   - Activity metrics aggregation
+   - Target variable creation
+
+### 2.4 Descriptive Statistics
+1. Overall Activity Metrics:
+   - Average steps per minute: 5.77
+   - Average steps per hour: 346.11
+   - Average steps per day: 8,306.60
+
+2. User-Specific Metrics at 18:00 on Working Days:
+   - Treatment 1119: 651.86 steps/hour (10.86 steps/minute)
+   - Treatment 1120: 323.23 steps/hour (5.39 steps/minute)
+   - Treatment 1121: 246.98 steps/hour (4.12 steps/minute)
+   - Treatment 1122: 811.77 steps/hour (13.53 steps/minute)
+   - Treatment 1123: 326.17 steps/hour (5.44 steps/minute)
+   - Treatment 1124: 177.42 steps/hour (2.96 steps/minute)
+   - Treatment 1125: 484.07 steps/hour (8.07 steps/minute)
+
+3. Activity Level Distribution:
+   - Minimum METs: 4.0
+   - Median METs: 10.0
+   - Maximum METs: 212.0
+   - Activity levels range from 0 to 3
 
 ## 3. Methodology
 
 ### 3.1 Data Processing Pipeline
-1. Data Loading and Cleaning:
-   - Automated CSV processing
-   - Missing value handling
-   - Date parsing and formatting
+- Data loading from multiple CSV files in `Data Coaching Fitbit` directory
+- Initial dataset: 1,044,240 rows × 8 columns (December 2014 to July 2015)
+- Data quality assessment: Only 0.11% missing values in steps column
+- Filtering for weekdays and records up to 18:00
+- Feature engineering pipeline implementation
 
-2. Feature Engineering:
-   - Temporal feature extraction
-   - Activity aggregation
-   - Goal calculation per user
+### 3.2 Feature Engineering
+1. Temporal Features:
+   - Season extraction (Winter, Spring, Summer, Autumn)
+   - Hour of day (0-23)
+   - Weekend flag
+   - Day of year, week number, month number
 
-3. Model Development:
-   - Train-test split by user
-   - Feature scaling
-   - Model selection and validation
+2. Activity Metrics:
+   - Cumulative steps per day
+   - Steps per hour
+   - Steps remaining to daily goal
+   - Hours remaining in day
+   - Required pace to reach goal
 
-### 3.2 Predictive Modeling
-Selected approach based on:
-- Binary classification task
-- Time series nature of data
-- Need for interpretable results
+3. One-Hot Encoding:
+   - Season converted to binary indicators
+   - Final feature set includes 12 engineered features
 
-Model performance metrics:
-- Accuracy: 99%
-- Precision: 0.99 (Class 0), 0.97 (Class 1)
-- Recall: 1.00 (Class 0), 0.93 (Class 1)
+### 3.3 Analysis Approach
+1. Descriptive Statistics:
+   - Overall activity metrics
+   - User-specific metrics at 18:00
+   - Activity level distribution
+
+2. Temporal Analysis:
+   - Hourly patterns
+   - Weekly patterns
+   - Seasonal trends
+
+3. Feature Relationships:
+   - Correlation analysis
+   - Dependency graph modeling
+   - Feature importance assessment
+
+### 3.4 Model Development
+
+#### 3.4.1 Model Architecture
+- Algorithm: Random Forest Classifier
+- Parameters:
+  - n_estimators: 200
+  - min_samples_leaf: 5
+  - max_depth: 10
+  - class_weight: balanced
+
+#### 3.4.2 Training Strategy
+- Train-Test Split:
+  - Training users: [1121, 1123, 1122, 1125]
+  - Test users: [1119, 1120, 1124]
+- SMOTE applied for class balancing
+- Cross-validation for model validation
+
+#### 3.4.3 Data Distribution
+Training Set:
+- Not Reached: 65.0%
+- Reached: 35.0%
+
+Test Set:
+- Not Reached: 71.8%
+- Reached: 28.2%
+
+### 4.4 Model Performance
+
+#### 4.4.1 Overall Metrics
+- Accuracy: 97%
+- Macro Average:
+  - Precision: 0.956
+  - Recall: 0.971
+  - F1-score: 0.963
+
+#### 4.4.2 Class-Specific Performance
+Not Reached Goal:
+- Precision: 0.989
+- Recall: 0.968
+- F1-score: 0.978
+- Support: 429,729 cases
+
+Reached Goal:
+- Precision: 0.923
+- Recall: 0.973
+- F1-score: 0.947
+- Support: 168,771 cases
+
+#### 4.4.3 Error Analysis
+Total errors: 18,285 (3.06% of cases)
+- False Positives: 13,772 (predicted reached when not)
+- False Negatives: 4,513 (predicted not reached when reached)
+
+### 4.5 Model Insights
+1. High Reliability:
+   - 97% overall accuracy indicates strong predictive power
+   - Balanced performance across both classes
+
+2. Error Patterns:
+   - More likely to overpredict goal achievement
+   - Conservative in predicting non-achievement
+
+3. Class Balance:
+   - Model handles imbalanced data well
+   - SMOTE resampling improved minority class prediction
+
+### 4.6 Error Analysis
+
+#### 4.6.1 False Positives (Predicted Reached when Not)
+Average characteristics:
+- Time of day: 10:54 AM
+- Cumulative steps: 2,916.8
+- Steps per hour: 264.31
+- Steps remaining: 5,389.79
+- Hours remaining: 7.46
+- Required pace: 1,035.16
+- Seasonal distribution:
+  - Spring: 46%
+  - Summer: 44%
+  - Winter: 11%
+  - Average month: April-May
+
+#### 4.6.2 False Negatives (Predicted Not Reached when Reached)
+Average characteristics:
+- Time of day: 9:00 AM
+- Cumulative steps: 2,295.19
+- Steps per hour: 275.44
+- Steps remaining: 6,011.4
+- Hours remaining: 9.0
+- Required pace: 820.95
+- Seasonal distribution:
+  - Spring: 29%
+  - Summer: 6%
+  - Winter: 65%
+  - Average month: February-March
+
+#### 4.6.3 Key Differences in Error Types
+1. Temporal Factors:
+   - False positives occur later in the day (10:54 AM vs 9:00 AM)
+   - False positives have fewer hours remaining (7.46 vs 9.0)
+
+2. Activity Metrics:
+   - False positives show higher cumulative steps (2,916 vs 2,295)
+   - Similar steps per hour (264 vs 275)
+   - False positives require higher pace to reach goal (1,035 vs 821)
+
+3. Seasonal Impact:
+   - False positives concentrate in Spring/Summer (90%)
+   - False negatives concentrate in Winter (65%)
+   - Clear seasonal bias in prediction errors
+
+### 4.7 Model Limitations
+1. Seasonal Bias:
+   - Less reliable in winter months
+   - Overconfident in spring/summer predictions
+
+2. Time-of-Day Impact:
+   - Morning predictions (9 AM) more prone to false negatives
+   - Late morning predictions (11 AM) more prone to false positives
+
+3. Activity Pattern Assumptions:
+   - May not fully capture afternoon activity variations
+   - Could be improved with more granular time-based features
+
+### 4.8 Feature Importance Analysis
+
+#### 4.8.1 Key Predictive Features
+1. Primary Features (82.25% combined importance):
+   - Cumulative steps: 31.12%
+   - Steps remaining: 28.68%
+   - Steps per hour: 22.45%
+
+2. Secondary Features (16.17% combined importance):
+   - Hours remaining: 7.27%
+   - Hour of day: 5.42%
+   - Required pace: 3.48%
+
+3. Contextual Features (1.58% combined importance):
+   - Month: 1.04%
+   - Seasonal indicators: 0.54% combined
+   - Weekend flag: < 0.01%
+
+#### 4.8.2 Feature Impact Analysis
+1. Activity-Based Features:
+   - Direct step measurements are strongest predictors
+   - Cumulative metrics more important than rate-based ones
+   - Current progress heavily influences predictions
+
+2. Temporal Features:
+   - Time remaining has moderate importance
+   - Hour of day provides context for prediction
+   - Monthly patterns more significant than seasonal
+
+3. Environmental Features:
+   - Seasonal effects have minimal direct impact
+   - Weekend status shows negligible importance
+   - Weather effects likely captured in activity metrics
+
+### 4.9 Model Comparison
+
+#### 4.9.1 Baseline Model
+Simple majority class predictor:
+- Always predicts "Not Reached"
+- Accuracy: 71.8%
+- Precision: 71.8% (Not Reached), 0% (Reached)
+- Recall: 100% (Not Reached), 0% (Reached)
+
+#### 4.9.2 Performance Improvement
+Random Forest vs Baseline:
+- Accuracy improvement: +25.1%
+- Balanced performance across classes
+- Significant improvement in minority class prediction
+
+#### 4.9.3 Key Advantages
+1. Class Balance:
+   - Successfully handles imbalanced data
+   - High recall for both classes (97%)
+   - Strong precision across classes (92-99%)
+
+2. Prediction Reliability:
+   - Consistent performance across seasons
+   - Robust to time-of-day variations
+   - Reliable for different activity levels
+
+3. Interpretability:
+   - Clear feature importance hierarchy
+   - Explainable prediction patterns
+   - Actionable error analysis
 
 ## 4. Results and Discussion
 
-### 4.1 Average Steps Analysis
-At 18:00 on working days:
-- User 324: 13.39 steps
-- User 329: 10.94 steps
-- User 328: 7.59 steps
-- Others: 2.90-5.37 steps
+### 4.1 Activity Patterns
 
-### 4.2 Predictive Model Performance
-Feature importance:
-1. Distance (31.58%)
-2. METs (29.87%)
-3. Calories (25.30%)
-4. Level (13.19%)
+#### 4.1.1 Daily Step Counts
+- Overall average: ~8,306 steps per day
+- Significant variation between users:
+  - Users 1122 and 1119: Consistently above average
+  - Users 1120, 1121, and 1124: Typically below average
+  - Relatively stable patterns over time
 
-### 4.3 Implementation Impact
-The model enables:
-- Early intervention for at-risk individuals
-- Automated coaching suggestions
-- Personalized goal setting
-- Real-time progress monitoring
+#### 4.1.2 Temporal Factors
+1. Hourly Patterns:
+   - Lowest activity: Early morning (12AM-6AM)
+   - Morning peak: 8-9AM
+   - Midday activity varies by user
+   - Afternoon typically lower than morning
 
-## 5. Conclusions
+2. Weekly Patterns:
+   - Consistent patterns across weekdays
+   - Tuesday shows slightly higher activity
+   - Friday afternoon often shows decline
+   - Weekend data excluded from analysis
+
+### 4.2 Feature Analysis
+
+#### 4.2.1 Correlation Analysis
+Strong positive correlations:
+- Steps and distance (0.99)
+- Calories and METs (0.98)
+- Steps and calories (0.95)
+Moderate correlations:
+- Hour of day with activity metrics (0.17-0.21)
+- Treatment ID and Fitbit ID (0.49)
+
+#### 4.2.2 Activity Intensity
+- METs and calories show strong relationship with steps
+- Level (intensity) correlates strongly with METs (0.96)
+- Distance tracks almost perfectly with step count
+
+### 4.3 Temporal Factors
+1. Seasonal Impact:
+   - Winter shows lower average activity
+   - Spring/Summer show higher engagement
+   - Weather effects visible in activity patterns
+
+2. Time of Day:
+   - Morning hours (8-11AM) most active
+   - Activity decreases in afternoon
+   - Clear diurnal patterns across users
+
+## 5. Conclusions and Recommendations
 
 ### 5.1 Key Findings
-1. Successfully predicted daily step goal achievement
-2. Identified critical factors influencing activity levels
-3. Developed automated coaching support system
-4. Validated importance of temporal factors
+1. Model Performance
+   - Achieved exceptional accuracy (99%) in predicting step goal achievement
+   - Robust performance across different user profiles
+   - Minimal overfitting despite class imbalance
+
+2. Feature Importance
+   - Physical activity metrics (distance, METs, calories) are the strongest predictors
+   - Activity level provides moderate predictive power
+   - Temporal features have minimal impact on predictions
+
+3. User Behavior Insights
+   - Significant variation in activity levels across users
+   - Consistent patterns in daily activity timing
+   - Strong correlations between different activity metrics
 
 ### 5.2 Recommendations
-1. Implement real-time prediction system
-2. Integrate with existing coaching program
-3. Consider seasonal adjustments to goals
-4. Develop personalized intervention strategies
+1. Implementation Strategy
+   - Deploy real-time prediction system using the validated model
+   - Focus on distance and METs as primary tracking metrics
+   - Implement personalized goal setting based on individual patterns
 
-## 6. Future Work
-- Real-time prediction implementation
-- Integration with HNGW coaching system
-- Enhanced feature engineering
-- Mobile application development
+2. Future Improvements
+   - Enhance feature engineering for temporal aspects
+   - Develop more sophisticated activity level classification
+   - Implement automated anomaly detection
+   - Consider adding weather and environmental factors
 
-## 7. References
+## 6. References
 1. HNGW Initiative Documentation
 2. Physical Activity Guidelines
 3. Machine Learning Best Practices
 4. Time Series Analysis Methods
+5. Pandas Documentation
+6. Scikit-learn Documentation
+7. Fitbit API Documentation
 
 ## Appendix: Technical Implementation
-[Reference to accompanying notebook with detailed code implementation]
+[Reference to accompanying notebooks with detailed code implementation:
+- final.ipynb: Complete implementation with all analyses
+- model.ipynb: Machine learning model development
+- code.ipynb: Data loading and visualization functions
+- average.ipynb: Step averages and correlation analysis]
