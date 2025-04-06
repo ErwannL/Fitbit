@@ -36,11 +36,46 @@ To get more insight from our data, we created additional calculations:
 - Required pace (steps needed per hour to reach goal)
 - Hourly activity rates
 
-For our prediction model, we chose the Random Forest algorithm because:
-- It was covered in our machine learning courses
-- It can handle the different types of data we had
-- It's good at finding patterns in activity data
-- It tells us which factors are most important
+For our prediction model, we considered several machine learning algorithms:
+
+1. Logistic Regression:
+   - Pros: Simple, interpretable, works well with linear relationships
+   - Cons: Assumes linear relationship between features, less effective with our non-linear activity patterns
+   - Decision: Not chosen due to non-linear nature of step patterns
+
+2. Decision Trees:
+   - Pros: Easy to understand, handles non-linear relationships
+   - Cons: Prone to overfitting, less stable predictions
+   - Decision: Served as foundation for our chosen ensemble method
+
+3. Support Vector Machines (SVM):
+   - Pros: Effective for binary classification, handles non-linear data
+   - Cons: Computationally intensive, harder to interpret
+   - Decision: Not chosen due to complexity and lack of feature importance insights
+
+4. Neural Networks:
+   - Pros: Powerful pattern recognition, handles complex relationships
+   - Cons: Requires large datasets, computationally intensive, "black box" predictions
+   - Decision: Too complex for our dataset size and need for interpretability
+
+5. Random Forest (Chosen Algorithm):
+   - Pros:
+     * Handles non-linear relationships in activity data
+     * Provides feature importance rankings
+     * Less prone to overfitting than single decision trees
+     * Works well with our mix of numerical features
+     * Relatively fast training and prediction
+   - Cons:
+     * More complex than single decision trees
+     * Requires more memory than simpler models
+   - Decision: Selected because it balanced accuracy, interpretability, and complexity
+
+We ultimately chose Random Forest because:
+1. Our data showed clear non-linear patterns in activity levels
+2. We needed to understand which features were most important for predictions
+3. The algorithm is robust against overfitting, important with our limited user base
+4. It performed well in our initial tests compared to simpler models
+5. The implementation was feasible within our project timeframe and technical constraints
 
 We split our available users into two groups:
 Training data: Users 1121, 1123, 1122, and 1125
